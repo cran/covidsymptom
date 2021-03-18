@@ -2,6 +2,7 @@
 # covidsymptom <a href='https://github.com/csss-resultat/covidsymptom'><img src='man/figures/hex2.png' width="15%" align="right"  /></a>
 
 <!-- badges: start --->
+
 <!-- badges: end -->
 
 The covidsymptom R package provides an easy way to import open data from
@@ -16,6 +17,12 @@ the COVID Symptom Study-Sweden. The package includes three datasets:
 
 ## Installation
 
+Install the CRAN version:
+
+``` r
+install_packages("covidsymptom")
+```
+
 Development version of the package can be installed from Github with:
 
 ``` r
@@ -25,18 +32,34 @@ remotes::install_github("csss-resultat/covidsymptom")
 
 ## Update data
 
-Data from COVID Symptom Study - Sweden is updated on a daily basis. If
-you want to avoid updating the package to have the most recent data, you
-can use the function get\_latest\_data() to import the latest version
-available:
+Data from COVID Symptom Study - Sweden is updated on a daily basis. We
+have implemented the function `update_csss_data()` to update the
+datasets based on the
+<a href = https://github.com/RamiKrispin/coronavirus> coronavirus
+package.</a> this functions updates the package to the dev version in
+GitHub.
+
+``` r
+library(covidsymptom)
+update_csss_data()
+```
+
+If you want to avoid updating the package to have the most recent data,
+you can use the function `get_latest_data()` to import the latest
+version available:
 
 ``` r
 library(covidsymptom)
 national_estimates <- get_latest_data(data_level = "national")
 
 head(national_estimates)
-#> [1] "2020-05-11" "2020-05-12" "2020-05-13" "2020-05-14" "2020-05-15"
-#> [6] "2020-05-16"
+#>        Datum Uppskattning Low_CI High_CI
+#> 1 2020-05-11         0.66   0.60    0.74
+#> 2 2020-05-12         0.69   0.63    0.77
+#> 3 2020-05-13         0.71   0.65    0.79
+#> 4 2020-05-14         0.72   0.65    0.79
+#> 5 2020-05-15         0.71   0.65    0.78
+#> 6 2020-05-16         0.70   0.64    0.77
 ```
 
 ## Usage

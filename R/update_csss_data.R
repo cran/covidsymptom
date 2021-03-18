@@ -10,6 +10,7 @@
 #'
 #' @import rio
 #' @import remotes
+#' @import utils
 #'
 #' @return Updated data.frames
 #' @export
@@ -35,23 +36,25 @@ update_csss_data <- function(silence = FALSE){
 
   if(flag){
     if(!silence){
-      q <- base::tolower(base::readline("Updates are available on the covidsymptom dev version, do you want to update? n/Y"))
+      q <- base::tolower(base::readline("Updates are available on the covidsymptom dev version, do you want to install this version? n/Y"))
     } else {
       q <- "y"
     }
     if(q == "y" | q == "yes"){
 
+      if ("package:covidsymptom" %in% search()) { detach("package:covidsymptom", unload=TRUE) }
+      if ("covidsymptom" %in% rownames(utils::installed.packages())) { utils::remove.packages("covidsymptom")}
       base::tryCatch(
         expr = {
           remotes::install_github("csss-resultat/covidsymptom",
-                                   upgrade = "never",
-                                   ref = "master")
-
+                                  upgrade = "never",
+                                  ref = "master")
           if ("covidsymptom" %in% names(utils::sessionInfo()$otherPkgs)) {
             detach(package:covidsymptom, unload = TRUE)
             library(covidsymptom)
           }
         },
+
         error = function(e){
           message('Caught an error!')
           print(e)
