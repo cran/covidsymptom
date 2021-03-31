@@ -1,9 +1,20 @@
 
-# covidsymptom <a href='https://github.com/csss-resultat/covidsymptom'><img src='man/figures/hex2.png' width="15%" align="right"  /></a>
+# covidsymptom <a href='https://github.com/csss-resultat/covidsymptom'><img src='man/figures/hex3.png' width="15%" align="right"  /></a>
 
 <!-- badges: start --->
 
-<!-- badges: end -->
+<!-- [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/covidsymptom)](https://cran.r-project.org/package=covidsymptom) -->
+
+<!-- ![CRAN\Download\_Badge](https://cranlogs.r-pkg.org/badges/grand-total/covidsymptom) -->
+
+<!-- [![](https://img.shields.io/badge/devel%20version-0.9.2-blue.svg)](https://github.com/csss-resultat/covidsymptom) -->
+
+<!-- [![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) -->
+
+<!-- [![](https://img.shields.io/github/last-commit/csss-resultat/covidsymptom.svg)](https://github.com/csss-resultat/covidsymptom/commits/master) -->
+
+<!-- <!-- badges: end -->
+
 
 The covidsymptom R package provides an easy way to import open data from
 the COVID Symptom Study-Sweden. The package includes three datasets:
