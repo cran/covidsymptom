@@ -3,28 +3,21 @@
 
 <!-- badges: start --->
 
-<!-- [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/covidsymptom)](https://cran.r-project.org/package=covidsymptom) -->
 
-<!-- ![CRAN\Download\_Badge](https://cranlogs.r-pkg.org/badges/grand-total/covidsymptom) -->
 
-<!-- [![](https://img.shields.io/badge/devel%20version-0.9.2-blue.svg)](https://github.com/csss-resultat/covidsymptom) -->
-
-<!-- [![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) -->
-
-<!-- [![](https://img.shields.io/github/last-commit/csss-resultat/covidsymptom.svg)](https://github.com/csss-resultat/covidsymptom/commits/master) -->
-
-<!-- <!-- badges: end -->
-
+<!-- badges: end -->
 
 The covidsymptom R package provides an easy way to import open data from
-the COVID Symptom Study-Sweden. The package includes three datasets:
+the COVID Symptom Study-Sweden. The package includes four datasets:
 
-  - `national_estimates` - daily estimated incidence of symptomatic
+-   `national_estimates` - daily estimated incidence of symptomatic
     COVID-19 in Sweden
-  - `county_estimates` - daily estimated incidence of symptomatic
+-   `county_estimates` - daily estimated incidence of symptomatic
     COVID-19 in Swedish counties
-  - `postcode_estimates` - daily estimated incidence of symptomatic
+-   `postcode_estimates` - daily estimated incidence of symptomatic
     COVID-19 in smaller Swedish regions (2-digit postcodes)
+-   `csss_tests` - daily proportion of positive COVID-19 tests reported
+    by CSSS users
 
 ## Installation
 
@@ -43,12 +36,14 @@ remotes::install_github("csss-resultat/covidsymptom")
 
 ## Update data
 
-Data from COVID Symptom Study - Sweden is updated on a daily basis. We
-have implemented the function `update_csss_data()` to update the
-datasets based on the
+In order to respect CRAN best use practices, we will only push a new
+version of the package with most recent data every one month. However,
+data from COVID Symptom Study - Sweden is updated on a daily basis, thus
+the dev version of the package is also updated daily. The function
+`update_csss_data()` (based on a similar function from the
 <a href = https://github.com/RamiKrispin/coronavirus> coronavirus
-package.</a> this functions updates the package to the dev version in
-GitHub.
+package),</a> checks updates to the dataset and re-install the package
+with the most recent data (dev version).
 
 ``` r
 library(covidsymptom)
@@ -57,7 +52,8 @@ update_csss_data()
 
 If you want to avoid updating the package to have the most recent data,
 you can use the function `get_latest_data()` to import the latest
-version available:
+version available. Notice however that this won’t re-write the package
+datasets.
 
 ``` r
 library(covidsymptom)
@@ -75,9 +71,7 @@ head(national_estimates)
 
 ## Usage
 
-  - National estimates
-
-<!-- end list -->
+-   National estimates
 
 ``` r
 library(ggplot2)
@@ -102,9 +96,7 @@ covidsymptom::national_estimates %>%
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
-  - Counties’ estimates
-
-<!-- end list -->
+-   Counties’ estimates
 
 ``` r
 library(ggplot2)
@@ -129,11 +121,9 @@ covidsymptom::county_estimates %>%
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
-  - 2-digit postcodes’ estimates
+-   2-digit postcodes’ estimates
 
-COVID Symptom Study - Sweden provides also predictions at
-<a href = "https://csss-resultat.github.io/sverige2siffror/">2-digit
-postcode levels</a>.
+COVID Symptom Study - Sweden provides also predictions at 2-digit postcode levels.
 
 ``` r
 library(ggplot2)
@@ -181,7 +171,6 @@ filtered_data %>%
 <a><img src='man/figures/gt.png'/></a>
 
 ``` r
-
 stockholm_codes <- c('11', '12', '13', '14', '15', '16', '17', '18', '19')
 
 covidsymptom::postcode_estimates %>%
@@ -195,7 +184,7 @@ covidsymptom::postcode_estimates %>%
   theme(axis.text.x = element_text(angle = 45, hjust = 1), panel.grid.minor.x = element_blank(),
         legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
   geom_ribbon(aes(ymin = Low_CI, ymax = High_CI), color = "transparent", fill = "#a60f61", alpha = 0.09) +
-  facet_wrap(. ~ Postnummer)   
+  facet_wrap(. ~ Postnummer, scales= "free")   
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
@@ -214,13 +203,13 @@ smartphone app to facilitate real-time data collection of symptoms,
 exposures, and risk factors related to COVID-19. The app was developed
 by researchers at King’s College and Guys and St Thomas’ Hospitals in
 London in partnership with health science company Zoe Global
-Ltd. Baseline data and recurring daily questions are described in
-<a href = https://science.sciencemag.org/content/368/6497/1362> Drew et
+Ltd. Baseline data and recurring daily questions are described in
+<a href = https://www.science.org/doi/10.1126/science.abc0473> Drew et
 al (Science, 2020)</a>. The app was launched in the UK and US March
 2020. In Sweden, the study is based at Lund University and, as per a
 collaboration agreement on 28 July 2020, Uppsala University. The app was
 launched in Sweden on April 29, 2020 as part of a national research
-initiative on COVID-19. To date, \>4.5 million participants in the three
-countries are using the app, \~202,000 of whom live in Sweden.
+initiative on COVID-19. To date, &gt;4.5 million participants in the
+three countries are using the app, \~202,000 of whom live in Sweden.
 Participants have so far made \~271 million data entries, with Swedish
 participants contributing \~11 million of these.
