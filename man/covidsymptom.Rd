@@ -2,8 +2,8 @@
 % Please edit documentation in R/covidsymptom.R
 \docType{package}
 \name{covidsymptom}
-\alias{covidsymptom}
 \alias{covidsymptom-package}
+\alias{covidsymptom}
 \title{covidsymptom: COVID Symptom Study-Sweden data}
 \description{
 Easily imports COVID Symptom Study-Sweden open data
@@ -23,11 +23,12 @@ contributing ~11 million of these.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/csss-resultat/covidsymptom}
+  \item \url{https://github.com/hugofitipaldi/covidsymptom}
+  \item Report bugs at \url{https://github.com/hugofitipaldi/covidsymptom/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Hugo Fitipaldi \email{hugo.fitipaldi@med.lu.se}
+\strong{Maintainer}: Hugo Fitipaldi \email{hugofitipaldi@gmail.com}
 
 }

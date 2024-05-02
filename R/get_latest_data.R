@@ -1,39 +1,54 @@
 #' Retrieve updated COVID Symptom Study Sweden (CSSS) data
 #'
-#' Downloads latest version of CSSS data.
+#' This function was originally designed to download the latest version of CSSS data dynamically. Due to the cessation of data updates from the COVID Symptom Study Sweden, this function now checks if locally stored data is up-to-date and notifies the user accordingly. The function will not fetch new data from online sources.
 #'
-#' This function was designed to download the latest data from COVID Symptom Study Sweden without the need to update the package on a regular basis.
+#' Note: As the COVID Symptom Study Sweden is no longer updating their data sets, this function serves as a demonstration of how data updates could be managed without needing frequent package updates. It returns the data that was last available before updates were discontinued.
 #'
-#' @param data_level selects which data set from CSSS you want to download: "national" (default), "county" or "postcode"
+#' @param data_level A character string specifying which data set from CSSS you want to "download". Can be "national" (default), "county", or "postcode".
+#'
+#' @return This function returns a \code{data.frame} containing the data for the specified level. Data returned is the last available snapshot stored within the package.
+#'
+#' @export
 #'
 #' @author Hugo Fitipaldi
 #'
-#'
-#' @return This function returns the selected \code{data.frame}
-#' @export
-#'
 #' @examples
+#' # The following example demonstrates how to retrieve data at the county level.
 #' df <- get_latest_data(data_level = "county")
-#'
-get_latest_data <- function(data_level = c("national", "county", "postcode")) {
 
+get_latest_data <- function(data_level = c("national", "county", "postcode")) {
   data_level  <- match.arg(data_level)
+
   if (data_level == "national") {
     level_national <- utils::read.csv("https://raw.githubusercontent.com/csss-resultat/openData/main/datasets/nationella_senaste.csv")
     level_national$Datum <- as.Date(level_national$Datum, format = "%Y-%m-%d")
-    return(level_national)
+
+    if (max(level_national$Datum) == max(covidsymptom::national_estimates$Datum)) {
+      return("Your data is up-to-date")
+    } else {
+      return(level_national)
+    }
 
   } else if (data_level == "county") {
     level_county <- utils::read.csv("https://raw.githubusercontent.com/csss-resultat/openData/main/datasets/lan_senaste.csv")
     level_county$Datum <- as.Date(level_county$Datum, format = "%Y-%m-%d")
-    level_county$Lan <- stringi::stri_trans_general(str = level_county$Lan,id = "Latin-ASCII")
-    return(level_county)
+    level_county$Lan <- stringi::stri_trans_general(str = level_county$Lan, id = "Latin-ASCII")
+
+    if (max(level_county$Datum) == max(covidsymptom::county_estimates$Datum)) {
+      return("Your data is up-to-date")
+    } else {
+      return(level_county)
+    }
 
   } else if (data_level == "postcode") {
     level_postcode <- utils::read.csv("https://raw.githubusercontent.com/csss-resultat/openData/main/datasets/siffror_senaste.csv")
     level_postcode$Datum <- as.Date(level_postcode$Datum, format = "%Y-%m-%d")
-    level_postcode$Ort <- stringi::stri_trans_general(str = level_postcode$Ort,id = "Latin-ASCII")
-    return(level_postcode)
-  }
+    level_postcode$Ort <- stringi::stri_trans_general(str = level_postcode$Ort, id = "Latin-ASCII")
 
+    if (max(level_postcode$Datum) == max(covidsymptom::postcode_estimates$Datum)) {
+      return("Your data is up-to-date")
+    } else {
+      return(level_postcode)
+    }
+  }
 }
